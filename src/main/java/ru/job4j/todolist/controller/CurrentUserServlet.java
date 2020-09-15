@@ -1,8 +1,7 @@
 package ru.job4j.todolist.controller;
 
 import com.google.gson.Gson;
-import ru.job4j.todolist.db.HbmItems;
-import ru.job4j.todolist.model.Item;
+import ru.job4j.todolist.model.User;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -12,16 +11,15 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.nio.charset.StandardCharsets;
-import java.util.List;
 
-@WebServlet(value = "/tasks", loadOnStartup = 0)
-public class ShowTasksServlet extends HttpServlet {
+@WebServlet("/currentUser")
+public class CurrentUserServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
-        List<Item> items = HbmItems.instOf().findAll();
-        String json = new Gson().toJson(items);
-        PrintWriter pw = new PrintWriter((resp.getOutputStream()), true, StandardCharsets.UTF_8);
+        User user = (User) getServletContext().getAttribute("currentUser");
+        String json = new Gson().toJson(user);
+        PrintWriter pw = new PrintWriter(resp.getOutputStream(), true, StandardCharsets.UTF_8);
         pw.println(json);
     }
 }

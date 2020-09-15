@@ -15,7 +15,7 @@ import java.io.IOException;
 public class DoTasksServlet extends HttpServlet {
 
     @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) {
        int id = Integer.parseInt(req.getParameter("id"));
        Item item = HbmItems.instOf().findById(id);
        item.setDone(true);

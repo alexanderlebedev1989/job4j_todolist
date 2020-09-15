@@ -18,7 +18,7 @@ import java.util.List;
 public class ActiveTasksServlet extends HttpServlet {
 
     @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         List<Item> items = HbmItems.instOf().select(false);
         String json = new Gson().toJson(items);
         PrintWriter pw = new PrintWriter(resp.getOutputStream(), true, StandardCharsets.UTF_8);

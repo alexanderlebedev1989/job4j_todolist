@@ -25,6 +25,12 @@
             right: 400px;
             top: 200px;
         }
+
+        #user {
+            position: absolute;
+            right: 400px;
+            top: 10px;
+        }
     </style>
     <script>
         function table(data) {
@@ -33,6 +39,7 @@
                 table.append('<tr>')
                 table.append('<td>' + el.description + '</td>')
                 table.append('<td>' + el.created + '</td>')
+                table.append('<td>' + el.user.name + '</td>')
                 if (el.done === false) {
                     table.append('<td>Можно выполнить<div class="row float-right" style="margin-right: 20px">' +
                         '<button type="reset" class="btn btn-primary" onclick="doTask(' + el.id + ')">Выполнить</button></div> </td>');
@@ -43,10 +50,11 @@
             })
         }
     </script>
+
+
     <title>Задачи</title>
 </head>
 <body>
-
 <script>
     function loadTable() {
         $.ajax({
@@ -119,7 +127,30 @@
             loadTable()
         }
     }
+
+    $(document).ready(function () {
+        $.ajax({
+            type: 'Get',
+            url: 'http://localhost:8080/todolist/currentUser',
+            dataType: 'json'
+        }).done(function (data) {
+            $('#u').replaceWith('<div>' + data.name + ' | Выйти</div>')
+        })
+    })
 </script>
+
+
+<div class="row" id="user">
+    <ul class="nav">
+        <li class="nav-item">
+            <a class="nav-link" href="index.jsp">
+                <div class="container">
+                    <div id="u" class="topright"></div>
+                </div>
+            </a>
+        </li>
+    </ul>
+</div>
 
 <div class="container">
     <div class="row pt-3">
@@ -166,11 +197,14 @@
                 <th>Задача</th>
                 <th>Дата создания</th>
                 <th>Процесс выполнения</th>
+                <th>Автор</th>
             </tr>
             </thead>
             <tbody id="table"></tbody>
         </table>
     </div>
 </div>
+
+
 </body>
 </html>

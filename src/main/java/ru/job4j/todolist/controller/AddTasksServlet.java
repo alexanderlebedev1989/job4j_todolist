@@ -2,6 +2,7 @@ package ru.job4j.todolist.controller;
 
 import ru.job4j.todolist.db.HbmItems;
 import ru.job4j.todolist.model.Item;
+import ru.job4j.todolist.model.User;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -19,6 +20,6 @@ public class AddTasksServlet extends HttpServlet {
         String text = req.getParameter("text");
         Item item = new Item(text);
         item.setCreated(new Date(System.currentTimeMillis()));
-        HbmItems.instOf().add(item);
+        HbmItems.instOf().add(item, (User) getServletContext().getAttribute("currentUser"));
     }
 }
