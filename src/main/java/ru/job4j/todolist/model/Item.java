@@ -11,11 +11,15 @@ public class Item {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     private String description;
+
+    @Temporal(TemporalType.TIMESTAMP)
     private Date created;
+
     private boolean done;
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;
+
 
 
     public Item() {
